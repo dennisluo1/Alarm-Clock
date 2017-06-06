@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Alarm Clock</title>
+	<style type="text/css">
+		#myalarmclock{
+            font-size: 50px;
+            font-family: arial;
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            margin-left: 90px;
+		}
+
+		body{
+			background: url('http://blog.iso50.com/wp-content/uploads/2015/09/Tycho-Elsewhere-2015.jpg');
+			text-align: center;
+
+		}
+	</style>
+</head>
+<body onload="showTime()">
+	<form name="alarm">
+		<h1>Set Alarm Time</h1>
+		
+		<h2>Hour</h2>
+		<input type= "number" min= "0" max= "12" maxlength="2" name="Hour">
+
+		<h2>Minute</h2>
+		<input type= "number" min="0" max= "59" maxlength="2" name="minute">
+
+		<h2>Second</h2>
+		<input type= "number" min="0" max= "59" maxlenth="2" name="second"></br>
+		</br>
+		<input type= "button" onclick= "getUserInput()" value= "Set The Alarm Time">
+	</form>
+
+	<div id="myalarmclock"></div>
+	<script type="text/javascript">
+		var perHour = 0, perMinute = 0;
+		
+		function showTime(){
+			var date = new Date(); 
+			var h = date.getHours();
+			var m = date.getMinutes();
+			var s = date.getSeconds();
+			var session = "AM";
+
+			var sound = new Audio("http://www.freespecialeffects.co.uk/soundfx/sirens/alarm_01.wav");
+			if(h == 0){
+				h = 12;
+			}
+
+			if(h > 12){
+				h = h -12;
+				session = "PM";
+			}
+
+			if(h < 10){
+				h = "0" + h; 
+			}
+
+			if(m < 10){
+				m = "0" + m;
+			}
+
+			if(s < 10){
+				s = "0" + s; 
+			}
+
+			var time = h + ":" + m + ":" + s + " " + session; 
+			document.getElementById("myalarmclock").innerText = time;
+
+			if(m == perMinute && h == perHour){
+			console.log("wake up sleepy");
+			sound.play();
+			}
+	
+			setTimeout(showTime, 1000);
+		}
+		
+
+		function getUserInput(){
+			perHour= alarm.Hour.value;
+			perMinute= alarm.minute.value;
+		}
+		showTime();
+	</script>
+</body>
+</html>
